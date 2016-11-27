@@ -3,11 +3,155 @@ WebCounter
 
 API:
 ----
+The following yaml represents the api and can be properly viewed on the site http://editor.swagger.io/#/
+
+swagger: '2.0'
+info:
+  title: WebCounter
+  description: WebCounter implementation using jersey
+  version: "1.0.0"
+# array of all schemes that your API supports
+schemes:
+  - http
+# will be prefixed to all paths
+basePath: /
+produces:
+  - application/json
+paths:
+  /counter/list:
+    get:
+      summary: List of counters
+      description: |
+        The list of all counters.
+      tags:
+        - CountersList
+      responses:
+        200:
+          description: The list of counters
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Counter'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+  /counter/{name}:
+    get:
+      summary: The value of the counter identified by {name}
+      description: |
+        Provides the counter value.
+      parameters:
+        - name: name
+          in: path
+          description: name of the counter.
+          required: true
+          type: string
+      tags:
+        - GetCounter
+      responses:
+        200:
+          description: The counter value
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Counter'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+    put:
+      summary: Increments counter
+      description: Increments the value of the counter.
+      parameters:
+        - name: name
+          in: path
+          description: the name of the counter.
+          required: true
+          type: string
+      tags:
+        - IncrementCounter
+      responses:
+        200:
+          description: The counter updated
+          schema:
+            type: object
+            items:
+              $ref: '#/definitions/Counter'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+    post:
+      summary: Increments the counter and creates if doesn't exists
+      description: Incrementes the value of the counter. The counter will be 
+                  created if doesn't exist.
+      parameters:
+        - name: name
+          in: path
+          description: the name of the counter.
+          required: true
+          type: string
+      tags:
+        - CreateIncrementCounter
+      responses:
+        200:
+          description: The value of the counter
+          schema:
+            $ref: '#/definitions/Counter'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+  /counter/create:
+    post:
+      summary: Creates a counter
+      description: Creates a new counter with the name provided.
+      parameters:
+        - name: counterCreate
+          in: body
+          schema:
+            $ref: '#/definitions/CounterCreate'
+      tags:
+        - CreateCounter
+      responses:
+        201:
+          description: The counter created
+          schema:
+            $ref: '#/definitions/Counter'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorMessage'
+definitions:
+  Counter:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Identifier of the counter.
+      value:
+        type: integer
+        format: int32
+        description: the value of the counter.
+  CounterCreate:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of the counter to be created
+  ErrorMessage:
+    type: object
+    properties:
+      result:
+        type: boolean
+      message:
+        type: string
 
 
 
-Start:
-------
+Start application:
+------------------
 To start the application run the script: ./run.sh
 This will execute "mvn clean spring-boot:run"
 
