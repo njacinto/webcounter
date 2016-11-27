@@ -1,11 +1,23 @@
+WebCounter
+---------
+
+API:
+----
 
 
+
+Start:
+------
+To start the application run the script: ./run.sh
+This will execute "mvn clean spring-boot:run"
+
+
+Curl examples:
+--------------
 curl --data "" http://localhost:8080/counter/C1
 curl --data "" http://localhost:8080/counter/C2
 curl http://localhost:8080/counter/C1
 curl http://localhost:8080/counter/C2
 curl http://localhost:8080/counter/list
-
-curl --data "{ \"name\": \"C3\"  }" http://localhost:8080/counter/
 curl --data "{ \"name\": \"C3\"  }" -H "Content-Type:application/json" http://localhost:8080/counter/create/
 
