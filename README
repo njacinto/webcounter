@@ -1,6 +1,10 @@
 WebCounter
 ---------
 
+docker build -t webcounter:1.0 .
+docker run -it --rm -p 8888:8080 webcounter:1.0
+
+
 API:
 ----
 The following yaml represents the api and can be properly viewed on the site http://editor.swagger.io/#/
@@ -155,6 +159,13 @@ Start application:
 To start the application run the script: ./run.sh
 This will execute "mvn clean spring-boot:run"
 
+Create docker image:
+--------------------
+build: mvn package
+
+Create: docker build -t webcounter:1.0 .
+
+Run:  docker run -it --rm -p 8080:8080 webcounter:1.0
 
 Curl examples:
 --------------
