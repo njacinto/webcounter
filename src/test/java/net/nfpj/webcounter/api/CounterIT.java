@@ -175,7 +175,7 @@ public class CounterIT {
     
     private void createCounter(String name) {
         ResponseEntity<Counter> entity = 
-                restTemplate.postForEntity("/counter/", new CounterCreationRequest(name), Counter.class);
+                restTemplate.postForEntity("/counter/create", new CounterCreationRequest(name), Counter.class);
         assertEquals("Unexpected response status: "+entity.getStatusCodeValue(), 
                 HttpStatus.SC_CREATED, entity.getStatusCodeValue());
         assertEquals(new Counter(name, 0), entity.getBody());
